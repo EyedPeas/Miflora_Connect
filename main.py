@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from miflora.miflora_poller import (
     MI_BATTERY,
     MI_CONDUCTIVITY,
