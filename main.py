@@ -10,7 +10,7 @@ from miflora.miflora_poller import (
 )
 from btlewrap.bluepy import BluepyBackend
 import psycopg2
-from config import get_mac_address
+from config import get_mac_address, get_database, get_host, get_port, get_user, get_password
 
 mac_address = get_mac_address()
 poller = MiFloraPoller(mac_address, BluepyBackend)
@@ -22,11 +22,11 @@ conductivity = poller.parameter_value(MI_CONDUCTIVITY)
 battery = poller.parameter_value(MI_BATTERY)
 
 
-con = psycopg2.connect(database="postgres",
-                        host="localhost",
-                        user="marc",
-                        password="fadewelt1993",
-                        port="5432")
+con = psycopg2.connect(database=get_database(),
+                        host=get_host(),
+                        user=get_user(),
+                        password=get_password(),
+                        port=get_port())
 
 cursor = con.cursor()
 
