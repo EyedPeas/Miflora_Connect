@@ -11,7 +11,6 @@ def write_config():
     with open('config.ini', 'w') as configfile:
         config.write(configfile)
 
-write_config()
 
 def read_config():
     config = configparser.ConfigParser()
