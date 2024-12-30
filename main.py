@@ -9,7 +9,7 @@ from miflora.miflora_poller import (
     MiFloraPoller,
 )
 from btlewrap.bluepy import BluepyBackend
-import sqlite3
+import psycopg2
 from config import get_mac_address
 
 mac_address = get_mac_address()
@@ -21,11 +21,18 @@ moisture = poller.parameter_value(MI_MOISTURE)
 conductivity = poller.parameter_value(MI_CONDUCTIVITY)
 battery = poller.parameter_value(MI_BATTERY)
 
-con = sqlite3.connect('miflora')
-cur = con.cursor()
-cur.execute("""
+
+con = psycopg2.connect(database="postgres",
+                        host="localhost",
+                        user="marc",
+                        password="fadewelt1993",
+                        port="5432")
+
+cursor = con.cursor()
+
+cursor.execute("""
     INSERT INTO readings (mac_address, plant_name, temperature, light, moisture, conductivity, battery)VALUES
-        (?,?,?,?,?,?,?)""",(mac_address, "test", temp, light, moisture, conductivity, battery) )
+        (%s,%s,%s,%s,%s,%s,%s)""",(mac_address, "test", temp, light, moisture, conductivity, battery) )
 
 con.commit()
 con.close()
